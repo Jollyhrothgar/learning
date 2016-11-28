@@ -1,0 +1,5 @@
+Peter Pan,1234,2499.99
+Paul Simon,2468,3000.00
+Fred Perry,1357,1250.50
+Tom Jones,5678,600.00
+Harry Hill,9876,2255.00

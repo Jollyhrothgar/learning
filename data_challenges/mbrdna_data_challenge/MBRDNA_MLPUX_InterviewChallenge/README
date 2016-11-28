@@ -1,0 +1,48 @@
+Attached is the programming/machine learning challenge that we briefly discussed
+before. It is written in Python 2.7, and expects scipy to be installed and
+configured (or at least, minimally, numpy and matplotlib). The main file of
+interest is named “main.py,” and is the only one that requires any modification.
+You can certainly look at the other files to help elucidate any issues. 
+
+Heres the setup: Junior member Jack was given the task of writing a binary
+classifier given two dimensional input based on a set of existing training
+examples. Jack, having some previous experience in NLP, decided to stay within
+his comfort zone and try a categorical bayesian approach. Much to his pleasure,
+Jack found that his classifier greatly outperformed the required commercially
+viable 16.5% error (and in fact scored 1-2% consistently). 
+
+Jack, thinking his work was successful, has since moved on to other topics in
+other departments. 
+
+To your dismay, much later you discover that Jack was not properly using cross
+validation for his accuracy metrics, and while it does reach very good
+performance on training data, the model does not generalize at all and does no
+better than random on a test set. Fundamentally, you assert, a categorical
+bayesian approach is a terrible choice for the problem at hand and that Jack’s
+code readability is very poor. 
+
+While it is well within your ability to scrap Jack’s classifier and write an
+appropriate one from scratch, you decide it is much more time efficient instead
+to apply your strong knowledge in machine learning fundamentals to apply some
+meta-algorithms and data processing to allow Jack’s original classifier to solve
+the problem. 
+
+Constraints: Only modify main.py (and not Jacks’ mnbayes.py implementation) Do
+not modify main.py below the “Plumbing” comment (this code passes data around,
+calculates accuracy, and offers some visualization support). Everything above it
+is fair game. Your focus should be around the “predict” and “train” functions
+which currently do nothing other than pass the data directly to Jack’s
+classifier.  Do not use any pre-existing code other than functions provided by
+numpy and core python.  Your code should call, at least once, Jack’s train and
+predict functions in your train and predict functions, and use the results of
+these calls in a meaningful way. Attempting to circumvent the classifier with
+your own classifier is against the spirit of the activity (this includes
+ensembles model that include Jack’s classifier and a classifier that you
+provide) Aim for the lowest error values on the test set you can. Getting 15%
+relatively often between runs is a very reasonable goal. 
+
+	Please provide your main.py code and a 3-4 sentence description of your
+strategy once you are finished with the exercise. If the exercise is taking too
+much time (>2 hours), please provide your main.py and provide a longer
+description about your analysis of the problem, the approaches you have tried,
+your best results so far, and what your next steps would be. 

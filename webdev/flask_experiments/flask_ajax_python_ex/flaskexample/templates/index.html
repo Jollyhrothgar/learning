@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- PUT ALL BUTTON FUNCTIONS HERE --> 
+<script type="text/javascript">
+
+// A text-field type button
+$(function() {
+    $("#submitBtn").click(function() {
+        $.ajax({
+            type: "GET",
+            url: $SCRIPT_ROOT + "/echo/",
+            contentType: "application/json; charset=utf-8",
+            data: { echoValue: $('input[name="echoText"]').val() },
+            success: function(data) {
+                $('#echoResult').text(data.value);
+            }
+        });     
+    });
+});
+
+{% for element in page_structure %}
+
+// range-based
+$(function() {
+    $("#{{element['element_id']}}").click(function() {
+        $.ajax({
+            type: "GET",
+            url: $SCRIPT_ROOT + "/echo/",
+            contentType: "application/json; charset=utf-8",
+            data: { echoValue: $('input[name="{{element['input_name']}}"]').val() },
+            success: function(data) {
+                $('#{{element['result_id']}}').text(data.value);
+            }
+        });     
+    });
+});
+
+{% endfor %}
+</script>
+
+<strong>Enter a value to echo back:</strong>
+<input type="text" size="10" id="echoText" name="echoText">
+<button type="button" id="submitBtn" name="submitBtn">Submit via AJAX</button><br><br>
+<strong><div id="echoResult"></div></strong>
+
+{% for element in page_structure %}
+
+<strong>Enter another value to echo back:</strong>
+<input type="range" value="2" min="0" max="10" step="1" id="{{element['input_name']}}" name="{{element['input_name']}}">
+<button type="button" id="{{element['element_id']}}" name="{{element['element_id']}}">Submit via AJAX</button><br><br>
+<strong><div id="{{element['result_id']}}"></div></strong>
+
+{% endfor %}
+
+{% endblock %}

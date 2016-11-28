@@ -1,0 +1,7 @@
+General roles and responsibilities:
+* Responsible for analyzing large-scale data sets with machine learning and data mining technologies with the purpose of generating insights and predictions. Develop and implement models for understanding customer behavior and supporting internal product development.
+* Use analytical methods and data mining technologies to identify trends and patterns in vehicle-related data.
+* Explore unknown and complex data sets to identify new analytical use cases with the goal of supporting data-driven product development.
+* Use machine learning to design and develop models specific for vehicle-related data that can be used to explore and test hypothesis.
+* Develop predictive models and new algorithms that can be used in next-generation vehicle features and services.
+

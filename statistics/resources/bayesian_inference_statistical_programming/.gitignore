@@ -1,0 +1,6 @@
+.DS_Store
+*venv*
+*.pyc
+*~
+*.png
+**/.ipynb_checkpoints
