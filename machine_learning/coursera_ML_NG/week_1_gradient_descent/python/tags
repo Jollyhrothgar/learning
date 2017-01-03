@@ -1,0 +1,11 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+cost_function	ex_1.py	/^def cost_function():$/;"	f
+load_data	ex_1.py	/^def load_data(fname, delim = ',', cast_type = 'float'):$/;"	f
+plot_2D	ex_1.py	/^def plot_2D(x, y, x_title, y_title, **kwargs):$/;"	f
+show_ident	ex_1.py	/^def show_ident(i):$/;"	f
+update_params	ex_1.py	/^def update_params(theta,x,y):$/;"	f

@@ -1,11 +1,12 @@
 """
-Write a function that returns a 5x5 unit matrix
+Do 1D Gradient Descent Inefficiently.
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
 # import seaborn
 import time
+import math
 
 def show_ident(i):
     print (np.eye(i))
@@ -88,7 +89,7 @@ if __name__ == "__main__":
     # Show normalized data
     plt.figure()
     plt.plot(x_norm,y_norm, 'b+')
-    plt.plot(np.arange(0,10,1),np.arange(0,10,1),'r') # show y = x
+    # plt.plot(np.arange(0,10,1),np.arange(0,10,1),'r') # show y = x
     plt.draw()
 
     # Perform Batch Gradient Descent on the Data
@@ -108,17 +109,37 @@ if __name__ == "__main__":
     # temp1 = theta[1] - alpha*dJ/dtheta1(J(theta0,theta1)) | (theta0, theta1)
     # theta0 = temp0
     # theta1 = temp1
-
-    # inefficient list comprehension (how to vectorize?)
-    for iterations in [a*10 for a in range(100)]:
+    theta_prev = list(theta_1D)
+    iterations = 0
+    done = False
+    # inefficient - can this be vectorized??
+    while not done:
         x_norm = list(x_norm)
         y_norm = list(y_norm)
-        for i in range(iterations):
-            update_params(theta_1D,x_norm,y_norm)
-            print(theta_1D)
+        update_params(theta_1D,x_norm,y_norm)
         show_x = np.arange(0,10,1)
         y_values = np.ones(show_x.size)*theta_1D[0] + theta_1D[1]*(show_x)
-        plt.plot(show_x,y_values,'g')
-        plt.title("{} iterations".format(iterations))
-        plt.draw()
-        input("Press [return] key to continue")
+        if iterations%5 == 0:
+            plt.plot(show_x,y_values,'g')
+            plt.title("{} iterations".format(iterations))
+            plt.pause(0.005)
+
+        theta_next = list(theta_1D)
+        
+        diff_0 = 0
+        diff_1 = 0
+
+        diff_0 = math.fabs(theta_next[0] - theta_prev[0])
+        diff_1 = math.fabs(theta_next[1] - theta_prev[1])
+        
+        theta_prev = list(theta_next)
+
+        if diff_0 < 0.001 and diff_1 < 0.001: # better convergence - use cost function!
+            print("Converged after {} iterations".format(iterations))
+            print("Best params, y = mx + b, m = {}, b = {}".format(theta_1D[0],theta_1D[1]))
+            plt.plot(show_x,y_values,'g')
+            plt.title("{} iterations".format(iterations))
+            done = True
+        iterations += 1
+
+    input("Press [return] key to continue")
