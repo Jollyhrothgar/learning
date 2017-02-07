@@ -4,7 +4,7 @@ Do 1D Gradient Descent Inefficiently.
 
 import numpy as np
 import matplotlib.pyplot as plt
-# import seaborn
+import seaborn
 import time
 import math
 

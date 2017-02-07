@@ -1,0 +1,215 @@
+09:45] <Jollyhrothgar> I would like to have a list of decorators preceeding a function such as:
+[09:46] <Jollyhrothgar> 
+
+	@decorator1(arg1, arg2, arg3) 
+	@decorator2(thing1, thing2) 
+	@finaldecorator 
+		def a_function(stuff) ...
+
+[09:46] <Jollyhrothgar> okay, so the idea is that each decorator needs to inspect the bottom-most function
+[09:47] <Jollyhrothgar> the bottom most decorator spins of a websever which creates an interactive interface to the function
+[09:47] <Jollyhrothgar> while the top most decorators define UI elements to draw and how to display the function output
+[09:47] <Jollyhrothgar> I know that this can be accomplished with one decorator using a lot of arguments, but I like the symantic benefit of defining these pieces separately
+[09:48] <Jollyhrothgar> Is this kind of structure possible in python?
+[09:52] <marky1991> you can decorate a given function as many times as you want
+[09:52] <marky1991> yes
+[09:52] <marky1991> i forget the order
+[09:52] <marky1991> i have to test it every time
+[09:52] <marky1991> i think they're processed from bottom to top
+[09:52] <marky1991> i.e.
+[09:52] <Jollyhrothgar> bottom to top
+[09:52] <Jollyhrothgar> got it
+[09:52] <marky1991> @decorator1
+[09:53] <marky1991> @decorator2
+[09:53] <marky1991> def spam()
+[09:53] <Jollyhrothgar> alright
+[09:53] <marky1991> ou should be able to test prtetty quickly
+[09:53] <Jollyhrothgar> alright, I'll check that out
+[09:54] <Jollyhrothgar> thanks - its a good idea to just do a quick test thing
+[09:54] <Jollyhrothgar> I already have 90% of the program built, and I realized now that I want to handle the decorators in that way.
+[09:54] <Jollyhrothgar> heh
+[09:54] <Jollyhrothgar> okay, thanks again
+[09:56] <marky1991> yeah, i was right
+[09:57] <marky1991> np
+[09:58] <Jollyhrothgar> Will giving arguments to decorator1 mess up decorator2?
+[09:59] <Jollyhrothgar> A problem I was running into was that if the upper most decorator has arguments, then it asks for the function as an argument
+[09:59] <Jollyhrothgar> (ValueError)
+[09:59] <Jollyhrothgar> but I thought that implicitly, the function was passed as an argument
+[09:59] <Jollyhrothgar> but the problem is that in a nest, its not clear that the function gets passed all the way through
+[09:59] <Jollyhrothgar> anyway, its hurting my brain a bit
+[10:00] <marky1991> if you need to pass arguments, things do start getting more complicated
+[10:00] <Jollyhrothgar> right
+[10:00] <Jollyhrothgar> I explicitly need to pass arguments to the outer most decorators
+[10:01] <Jollyhrothgar> but those arguments need to relate to the innermost function
+[10:01] <marky1991> at that point, i switch to class-based decorators usually
+[10:01] <marky1991> and also consult the pep : )
+[10:01] <Jollyhrothgar> alright
+[10:01] <Jollyhrothgar> do you have a good reference for class-based decorators on hand?
+[10:01] <marky1991> but
+[10:02] <marky1991> they're just classes that implement __call__
+[10:02] <Jollyhrothgar> ah
+[10:02] <marky1991> i think they're passed the func-to-be-wrapped and args and kwargs
+[10:02] <Jollyhrothgar> okay
+[10:02] <marky1991> would test that
+[10:02] <Jollyhrothgar> alright
+[10:03] <marky1991> but
+[10:03] <marky1991> you're not going to be able to see anything about the innermost function
+[10:03] <marky1991> it's hidden in the stack at that pioint
+[10:03] <Jollyhrothgar> ack
+[10:03] <marky1991> buut
+[10:03] <marky1991> if you use functools.decorate
+[10:03] <marky1991> or  decorator or somethign
+[10:03] <marky1991> i tihnk it adds a wrapped attribute or something
+[10:03] <marky1991> let me see
+[10:04] <Jollyhrothgar> okay
+[10:04] <Jollyhrothgar> I'm using the @wraps in my decorators, but I'm not totally sure what it does
+[10:05] <Jollyhrothgar> I think it allows the function's attributes to be accessed as if it was undecorated..?
+[10:05] <marky1991> it copies some of the typical introspective stuff to the wrapper
+[10:05] <marky1991> __doc__, etc
+[10:06] <marky1991> for class-based, ynou'd want update_wrapper i think
+[10:06] <marky1991> if you're sticking with func-based (which you can totally do)
+[10:06] <marky1991> you do want wraps
+[10:06] <marky1991> both add a __wrapped__ attribute to the wrapping function
+[10:07] <marky1991> so in your outermost decorator, you could keep recursively going down through wrapped things until you get to one that wasn't wrapped
+[10:07] <marky1991> do you just need to know the original function, or its arguments?
+[10:07] <Jollyhrothgar> Both
+[10:07] <marky1991> hmm
+[10:07] <marky1991> wrapped will only provide the function itself
+[10:08] <marky1991> backing up a bit
+[10:08] <marky1991> what are these decorators?
+[10:08] <Jollyhrothgar> I basically need all decorators to call the inspect module on the decorated function
+[10:08] <Jollyhrothgar> I'm building an interactive web framework
+[10:08] <Jollyhrothgar> the idea is that the innermost decorator spins off a server which talks to a backend server
+[10:08] <Jollyhrothgar> and creates a web interface to the function
+[10:09] <Jollyhrothgar> if you just use the innermost decorator, you get your functions on the web, and they can be called, and the result is displayed for you
+[10:09] <marky1991> k...
+[10:09] <Jollyhrothgar> however, I want to add additional decorators which can bind some information to function arguments to generate UI elements
+[10:09] <marky1991> so far so good
+[10:09] <Jollyhrothgar> like sliders, checkboxes, etc
+[10:09] <Jollyhrothgar> that's passed as a dict
+[10:09] <Jollyhrothgar> to some global state tracking object
+[10:09] <Jollyhrothgar> finally, I want to add decorators which set output rules
+[10:10] <Jollyhrothgar> for example, you might want to show the output as a graph
+[10:10] <marky1991> i'm not convinced that using decorators for the ui and graphing stuff is right
+[10:10] <Jollyhrothgar> for the case of the UI elements, the idea is that the decorator takes a kwarg which matches one of the innermost functions' arguments
+[10:10] <marky1991> it's neat syntactically, but not great logically
+[10:10] <marky1991> that being siad
+[10:10] <Jollyhrothgar> That's the key
+[10:11] <Jollyhrothgar> I need a framework that is dirt simple syntactically
+[10:11] <Jollyhrothgar> and hide all the ugly stuff
+[10:11] <marky1991> maybe we can hack through enough
+[10:11] <marky1991> hmm
+[10:11] <marky1991> let me see
+[10:11] <marky1991> let me test for a sec
+[10:11] <Jollyhrothgar> Sure thing
+[10:12] <Jollyhrothgar> So, other options of course, are the pass complex data structures to just one decorator, but this doesn't seem as user friendly as just adding decorators
+[10:12] <Jollyhrothgar> the way I was approching the problem was to create a global registry of attributes, which the decorators themselves talk to
+[10:12] <Jollyhrothgar> and then when the bottom most decorator is called, it spins off the server and sends info to the front end
+[10:13] <Jollyhrothgar> but the outer decorators aren't propagating down to the innermost function
+[10:13] <Jollyhrothgar> anyway - that's the long and short of it
+[10:16] <Jollyhrothgar> the decorators themselves do not need to modify the output of the function in any way
+[10:16] <Jollyhrothgar> they just need to inspect the function
+[10:18] <Jollyhrothgar> what would be ideal is that each decorator returns a totally unmodified reference to the innermost function
+[10:18] <Jollyhrothgar> I think that would solve my issue
+[10:22] <marky1991> you can get that via __wrapped__
+[10:22] <marky1991> the args is harder
+[10:24] <marky1991> ok
+[10:24] <marky1991> I'm somehow getting it
+[10:24] <marky1991> let me paste my test
+[10:28] <marky1991> http://pastebin.com/FFBPmTgw
+
+		import functools
+		 
+		class ClassBased:
+				def __init__(self, *args, **kwargs):
+						print("Args for ClassBased.__init__:", args, kwargs)
+						self.args = args
+						self.kwargs = kwargs
+		 
+				def __call__(self, *args, **kwargs):
+						print("Args for ClassBased.__call__", args, kwargs)
+						@functools.wraps(args[0])
+						def wrapped(*inner_args, **inner_kwargs):
+								print("Args for ClassBased's wrapped function:", inner_args, inner_kwargs)
+								return args[0](*inner_args, **inner_kwargs)
+						return wrapped
+		 
+		def dec1(func):
+				print("Wrapping for dec1")
+				@functools.wraps(func)
+				def wrapped(*args, **kwargs):
+						print("in dec1")
+						func(*args, **kwargs)
+						print("leaving dec1")
+				print("done dec1")
+				return wrapped
+		 
+		def dec2(func):
+				print("wrapping in dec2")
+				@functools.wraps(func)
+				def wrapped(*args, **kwargs):
+						print("in dec2")
+						func(*args, **kwargs)
+						print("leaving dec2")
+				print("wrapped")
+				return wrapped
+		 
+		@ClassBased("mark")
+		@dec1
+		@dec2
+		def spam(inner_arg):
+				print("in spam")
+				print("inner arg is", inner_arg)
+ 
+		spam("Innermost arg")
+
+[10:28] <marky1991> if you try to have args for dec1 or dec2, you have to either switch to class-based or remember how to implement function-based decorators that have parameters
+[10:28] <Jollyhrothgar> okay, haivng a look
+[10:28] <marky1991> not sure if ClassBased would still be able too see if dec1 or dec2 were class-based
+[10:29] <marky1991> let me try nesting class-based i guess
+[10:29] <marky1991> yeah, if i put "@ClassBased("jim") immediately after classbased("mark"), the final class-based still has access to "innermost args"
+[10:30] <marky1991> hmm
+[10:31] <marky1991> class-based gets "innermost arg" because innermost arg is just being passed through them all
+[10:31] <marky1991> so at call time they all have the same args
+[10:31] <marky1991> which seems pretty reasonably
+[10:32] <Jollyhrothgar> ooh boy
+[10:32] <marky1991> *reasonable
+[10:32] <Jollyhrothgar> okay, I'm trying this out
+[10:32] <Jollyhrothgar> if this is the ticket, I owe you a beer
+[10:32] <marky1991> for non-trivial decorators, i still prefer class-based i think
+[10:32] <marky1991> all this makes my head hurt
+[10:33] <Jollyhrothgar> ooh damn
+[10:33] <Jollyhrothgar> I think that's it
+[10:34] <Jollyhrothgar> So basically, I just need to use this ClassBased as a template
+[10:34] <Jollyhrothgar> that's so awesome
+[10:34] <Jollyhrothgar> wow
+[10:34] <Jollyhrothgar> thanks
+[10:34] <marky1991> that's what i'd do
+[10:34] <marky1991> btw
+[10:34] <Jollyhrothgar> hey seriously, if I can buy you a beer - pm me a paypal or something
+[10:34] <marky1991> being able to see the innermost args is just because of all of the *args, **kwargs pass-through
+[10:34] <Jollyhrothgar> okay
+[10:34] <marky1991> make sure you don't break that =)
+[10:34] <Jollyhrothgar> Alright
+[10:35] <marky1991> this was a fun problem
+[10:35] <Jollyhrothgar> I mean - as long as the args aren't actually passed to the function that's fine
+[10:35] <marky1991> right now they are passed through everyone
+[10:35] <Jollyhrothgar> I just basically need to drive-by the function a bunch of times with decorators until the user has specified how they want the function to behave
+[10:35] <Jollyhrothgar> on the UI
+[10:35] <marky1991> but notice that "mark" is not passed through to spam
+[10:36] <Jollyhrothgar> That's cool
+[10:36] <Jollyhrothgar> I don't want those things passed through
+[10:36] <marky1991> the args of your innermost bubble through, but args to the drecorators themselves don't go down the chain
+[10:36] <Jollyhrothgar> the *inner_args and **inner_kwargs?
+[10:38] <marky1991> for ClassBased, inner_args and inner_kwargs becomes "innermost args", {}
+[10:38] <Jollyhrothgar> ah okay
+[10:38] <marky1991> and args contains the function being decorated
+[10:38] <marky1991> __call__ could just be simplified to __call__(func) I think
+[10:39] <marky1991> that would mkae things a litle less confusing
+[10:39] <marky1991> anyway, you get the picture
+[10:39] <Jollyhrothgar> Yeah
+[10:39] <Jollyhrothgar> I think I need to stare at your solution a bit to fully understand
+[10:39] <Jollyhrothgar> but its definitely what I needed, functionally
+[10:39] <marky1991> let me know if you have any questions
+[10:40] <Jollyhrothgar> Again, thanks a ton
+[10:40] <Jollyhrothgar> will do
