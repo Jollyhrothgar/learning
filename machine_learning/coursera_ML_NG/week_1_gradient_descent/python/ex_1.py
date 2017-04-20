@@ -4,7 +4,6 @@ Do 1D Gradient Descent Inefficiently.
 
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn
 import time
 import math
 
@@ -141,5 +140,4 @@ if __name__ == "__main__":
             plt.title("{} iterations".format(iterations))
             done = True
         iterations += 1
-
     input("Press [return] key to continue")
