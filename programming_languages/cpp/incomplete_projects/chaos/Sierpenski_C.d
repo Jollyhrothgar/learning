@@ -1,0 +1,52 @@
+
+# DO NOT DELETE
+
+./Sierpenski_C.so: /usr/local/src/root/include/TCanvas.h
+./Sierpenski_C.so: /usr/local/src/root/include/TPad.h
+./Sierpenski_C.so: /usr/local/src/root/include/TVirtualPad.h
+./Sierpenski_C.so: /usr/local/src/root/include/TAttPad.h
+./Sierpenski_C.so: /usr/local/src/root/include/Rtypes.h
+./Sierpenski_C.so: /usr/local/src/root/include/RConfig.h
+./Sierpenski_C.so: /usr/local/src/root/include/RVersion.h
+./Sierpenski_C.so: /usr/local/src/root/include/DllImport.h
+./Sierpenski_C.so: /usr/local/src/root/include/Rtypeinfo.h
+./Sierpenski_C.so: /usr/local/src/root/include/snprintf.h
+./Sierpenski_C.so: /usr/local/src/root/include/strlcpy.h
+./Sierpenski_C.so: /usr/local/src/root/include/TGenericClassInfo.h
+./Sierpenski_C.so: /usr/local/src/root/include/TSchemaHelper.h
+./Sierpenski_C.so: /usr/local/src/root/include/TVirtualX.h
+./Sierpenski_C.so: /usr/local/src/root/include/TNamed.h
+./Sierpenski_C.so: /usr/local/src/root/include/TObject.h
+./Sierpenski_C.so: /usr/local/src/root/include/TStorage.h
+./Sierpenski_C.so: /usr/local/src/root/include/TVersionCheck.h
+./Sierpenski_C.so: /usr/local/src/root/include/Riosfwd.h
+./Sierpenski_C.so: /usr/local/src/root/include/TBuffer.h
+./Sierpenski_C.so: /usr/local/src/root/include/TString.h
+./Sierpenski_C.so: /usr/local/src/root/include/TMathBase.h
+./Sierpenski_C.so: /usr/local/src/root/include/TAttLine.h
+./Sierpenski_C.so: /usr/local/src/root/include/TAttFill.h
+./Sierpenski_C.so: /usr/local/src/root/include/TAttText.h
+./Sierpenski_C.so: /usr/local/src/root/include/TAttMarker.h
+./Sierpenski_C.so: /usr/local/src/root/include/GuiTypes.h
+./Sierpenski_C.so: /usr/local/src/root/include/Buttons.h
+./Sierpenski_C.so: /usr/local/src/root/include/TQObject.h
+./Sierpenski_C.so: /usr/local/src/root/include/TAttCanvas.h
+./Sierpenski_C.so: /usr/local/src/root/include/TCanvasImp.h
+./Sierpenski_C.so: /usr/local/src/root/include/TGraph.h
+./Sierpenski_C.so: /usr/local/src/root/include/TVectorFfwd.h
+./Sierpenski_C.so: /usr/local/src/root/include/TVectorDfwd.h
+./Sierpenski_C.so: /usr/local/src/root/include/TFitResultPtr.h
+./Sierpenski_C.so: /usr/local/src/root/include/TH1F.h
+./Sierpenski_C.so: /usr/local/src/root/include/TH1.h
+./Sierpenski_C.so: /usr/local/src/root/include/TAxis.h
+./Sierpenski_C.so: /usr/local/src/root/include/TAttAxis.h
+./Sierpenski_C.so: /usr/local/src/root/include/TArrayD.h
+./Sierpenski_C.so: /usr/local/src/root/include/TArray.h
+./Sierpenski_C.so: /usr/local/src/root/include/TArrayC.h
+./Sierpenski_C.so: /usr/local/src/root/include/TArrayS.h
+./Sierpenski_C.so: /usr/local/src/root/include/TArrayI.h
+./Sierpenski_C.so: /usr/local/src/root/include/TArrayF.h
+./Sierpenski_C.so: /usr/local/src/root/include/Foption.h
+./Sierpenski_C.so: /usr/local/src/root/include/TRandom.h
+./Sierpenski_C.so: /usr/local/src/root/include/cintdictversion.h /usr/local/src/root/include/RVersion.h
+Sierpenski_C__ROOTBUILDVERSION= 5.34/09

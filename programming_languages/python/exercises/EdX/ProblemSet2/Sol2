@@ -1,0 +1,25 @@
+balance = 320000
+annualInterestRate = 0.2
+epsilon = 0.01
+low = balance / 12
+high = (balance * ((1 + annualInterestRate/12)**12))/12
+ans =  (high + low)/2.0
+ 
+newBalance = balance
+ 
+while abs(newBalance) >= epsilon:
+    newBalance = balance
+    for m in range(12):
+        newBalance = (newBalance - ans) + (newBalance - ans)*(annualInterestRate/12)
+        print('print balance: ' + str(newBalance))
+    if newBalance > 0:    
+        low = ans
+    elif newBalance < 0:
+        high = ans
+    else:
+        break
+ 
+        ans = (high+low) / 2
+    print('The new balance is: ' + str(newBalance))
+ 
+print("Lowest Payment: " + str(round(ans, 2)))

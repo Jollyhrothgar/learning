@@ -1,0 +1,10 @@
+sklearn
+pandas
+numpy
+seaborn
+matplotlib
+scipy
+pydot
+graphviz
+tensorflow_datasets
+jupyterlab

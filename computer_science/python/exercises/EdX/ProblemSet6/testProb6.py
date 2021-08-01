@@ -1,8 +1,0 @@
-## Test Trigger Stuff ##
-from ps6 import *
-
-story = NewsStory("","Planetarium Popular","Strangely, children enjoy learning","Astrophysicist Neil deGrasse Tyson brings in new visitors to NYC museum","")
-phraseTrigger = PhraseTrigger("Neil deGrasse Tyson")
-orTrigger = OrTrigger(SummaryTrigger("Mars"), SummaryTrigger("Venus"))
-orTrigger.evaluate(story)
-phraseTrigger.evaluate(story)
